@@ -29,8 +29,13 @@ export default function HeaderComponent() {
             <h1 className="ml-2">Last Read</h1>
           </div>
           <div>
-            {globalSurat.length > 0 && globalAyat >= 0 ? (
-              <p>handle baca disini</p>
+            {!isClient ? (
+              <Skeleton className="h-14 w-[150px]" />
+            ) : globalSurat.length > 0 && globalAyat >= 0 ? (
+              <section className="flex flex-col">
+                <h1>{globalSurat}</h1>
+                <h2>Surah No: {globalAyat}</h2>
+              </section>
             ) : (
               <p>You haven&apos;t read anything yet.</p>
             )}
