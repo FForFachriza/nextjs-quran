@@ -6,6 +6,17 @@ import { fetchSurah } from "@/lib/fetchSurah";
 import { useSurahStorage } from "@/store/useSurah";
 import { useRouter } from "next/navigation";
 
+interface Surah {
+  nomor: number;
+  nama: string;
+  nama_latin: string;
+  jumlah_ayat: number;
+  tempat_turun: string;
+  arti: string;
+  deskripsi: string;
+  audio: string;
+}
+
 export default function ListSurahComponent() {
   const { data, isLoading, isError } = fetchSurah();
   const router = useRouter();
