@@ -2,12 +2,14 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNameStore } from "@/store/useName";
+import { useSurahStorage } from "@/store/useSurah";
 import { useState, useEffect } from "react";
 
 export default function HeaderComponent() {
   const [isClient, setIsClient] = useState(false);
 
-  const { name: globalName, surat: globalSurat, ayat: globalAyat } = useNameStore.getState();
+  const { name: globalName } = useNameStore.getState();
+  const { surat: globalSurat, ayat: globalAyat } = useSurahStorage.getState();
 
   useEffect(() => {
     setIsClient(true);
