@@ -1,27 +1,38 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { fetchSurah } from "@/lib/fetchSurah";
+import { useFetchSurah } from "@/lib/fetchSurah";
+import { useSearchStore } from "@/store/useSearch";
 import { useSurahStorage } from "@/store/useSurah";
 import { useRouter } from "next/navigation";
-
-interface Surah {
-  nomor: number;
-  nama: string;
-  nama_latin: string;
-  jumlah_ayat: number;
-  tempat_turun: string;
-  arti: string;
-  deskripsi: string;
-  audio: string;
-}
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 export default function ListSurahComponent() {
-  const { data, isLoading, isError } = fetchSurah();
+  const [text, setText] = useState("");
+  const [suratData, setSuratData] = useState([]);
+  const [searchDebounced] = useDebounce(text, 1000);
+  const { data, isLoading, isError } = useFetchSurah();
   const router = useRouter();
-
   const { setAyat, setSurat } = useSurahStorage.getState();
+  const { isSearch } = useSearchStore();
+
+  useEffect(() => {
+    setSuratData(data);
+  }, [data]);
+
+  useEffect(() => {
+    if (searchDebounced === "") {
+      setSuratData(data);
+    } else {
+      const filteredResults = data.filter((val: any) =>
+        val.nama_latin.toLowerCase().includes(searchDebounced.toLowerCase())
+      );
+      setSuratData(filteredResults);
+    }
+  }, [searchDebounced, data]);
 
   const redirectHandler = (surat: string, ayat: number) => {
     setAyat(ayat);
@@ -32,11 +43,17 @@ export default function ListSurahComponent() {
 
   return (
     <section>
+      {/* <Input onChange={(e) => setText(e.target.value)} /> */}
+      {isSearch ? (
+        <section className="">
+          <Input onChange={(e) => setText(e.target.value)} className="my-4" placeholder="Cari Surah" />
+        </section>
+      ) : null}
       {isLoading
         ? Array(10)
             .fill("")
             .map((_val, i) => <Skeleton className="w-full h-14 my-4" key={i} />)
-        : data.map((val: any, i: number) => (
+        : suratData?.map((val: any, i: number) => (
             <>
               <section
                 onClick={() => redirectHandler(val.nama_latin, val.nomor)}

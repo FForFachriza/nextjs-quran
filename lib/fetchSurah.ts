@@ -1,10 +1,5 @@
 import useSWR from "swr";
 
-async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
-  const res = await fetch(input, init);
-  return res.json();
-}
-
 interface Surah {
   nomor: number;
   nama: string;
@@ -22,8 +17,9 @@ interface FetchSurah {
   isError: any;
 }
 
-export function fetchSurah(): FetchSurah {
+export function useFetchSurah(): FetchSurah {
   // eslint-disable-next-line react-hooks/rules-of-hooks
+  const fetcher = (url: any) => fetch(url).then((r) => r.json());
   const { data, error, isLoading } = useSWR(`https://open-api.my.id/api/quran/surah/`, fetcher);
 
   return {

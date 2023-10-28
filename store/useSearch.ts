@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
 interface searchstore {
-  search: string;
-  setSearch: (val: string) => void;
+  isSearch: boolean;
+  setSearch: () => void;
 }
 export const useSearchStore = create<searchstore>((set) => ({
-  search: "",
-  setSearch: (val: string) => set({ search: val }),
+  isSearch: false,
+  setSearch: () => set((state) => ({ isSearch: !state.isSearch })),
 }));
