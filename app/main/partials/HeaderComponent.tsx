@@ -1,14 +1,18 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNameStore } from "@/store/useName";
 import { useSurahStorage } from "@/store/useSurah";
+import { CheckboxIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { useState, useEffect } from "react";
 
 export default function HeaderComponent() {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [isTextEdited, setIsTextEdited] = useState<boolean>(false);
+  const [textEditedVal, setTextEditedVal] = useState<string>("");
 
-  const { name: globalName } = useNameStore.getState();
+  const { name: globalName, setName: setGlobalName } = useNameStore.getState();
   const { surat: globalSurat, ayat: globalAyat } = useSurahStorage.getState();
 
   useEffect(() => {
@@ -19,7 +23,29 @@ export default function HeaderComponent() {
     <section className="flex flex-col ">
       <section className="my-4 flex flex-col font-semibold">
         <h1 className="text-black/40 text-xl">Assalamualaikum</h1>
-        {!isClient ? <Skeleton className="h-8 w-[250px]" /> : <h2 className="text-3xl truncate mt-2">{globalName}</h2>}
+        {!isClient ? (
+          <Skeleton className="h-8 w-[250px]" />
+        ) : (
+          <div className="flex flex-row items-center">
+            {isTextEdited ? (
+              <>
+                <Input onChange={(e) => setTextEditedVal(e.target.value)} placeholder="Ganti Nama Kamu" />
+                <CheckboxIcon
+                  onClick={() => {
+                    setGlobalName(textEditedVal);
+                    setIsTextEdited((prev) => !prev);
+                  }}
+                  className="w-8 ml-2 h-8"
+                />
+              </>
+            ) : (
+              <>
+                <h2 className="text-3xl truncate mt-2">{globalName}</h2>
+                <Pencil2Icon onClick={() => setIsTextEdited((prev) => !prev)} className="w-4 ml-2 h-4" />
+              </>
+            )}
+          </div>
+        )}
       </section>
 
       <section className="flex flex-row justify-between bg-gradient-to-br from-[#df98fa] to-[#9055ff] h-[150px] rounded-lg text-white relative overflow-hidden p-5 ">
