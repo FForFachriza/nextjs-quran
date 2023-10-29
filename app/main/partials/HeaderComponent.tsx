@@ -9,8 +9,15 @@ import { useState, useEffect } from "react";
 
 export default function HeaderComponent() {
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [isTextEdited, setIsTextEdited] = useState<boolean>(false);
-  const [textEditedVal, setTextEditedVal] = useState<string>("");
+  const [text, setText] = useState<{
+    textEdited: boolean;
+    textEditedVal: string;
+    error: boolean;
+  }>({
+    textEdited: false,
+    textEditedVal: "",
+    error: false,
+  });
 
   const { name: globalName, setName: setGlobalName } = useNameStore.getState();
   const { surat: globalSurat, ayat: globalAyat } = useSurahStorage.getState();
@@ -25,25 +32,42 @@ export default function HeaderComponent() {
         <h1 className="text-black/40 text-xl">Assalamualaikum</h1>
         {!isClient ? (
           <Skeleton className="h-8 w-[250px]" />
+        ) : text.textEdited ? (
+          <div className="flex flex-row items-center  mt-2">
+            <Input
+              onChange={(e) =>
+                setText((prev) => ({
+                  ...prev,
+                  textEditedVal: e.target.value,
+                }))
+              }
+              placeholder="Ganti Nama Kamu"
+            />
+            {text.textEditedVal.length >= 3 ? (
+              <CheckboxIcon
+                onClick={() => {
+                  setGlobalName(text.textEditedVal);
+                  setText((prev) => ({
+                    ...prev,
+                    textEdited: !prev.textEdited,
+                  }));
+                }}
+                className="w-8 ml-2 h-8"
+              />
+            ) : null}
+          </div>
         ) : (
           <div className="flex flex-row items-center">
-            {isTextEdited ? (
-              <>
-                <Input onChange={(e) => setTextEditedVal(e.target.value)} placeholder="Ganti Nama Kamu" />
-                <CheckboxIcon
-                  onClick={() => {
-                    setGlobalName(textEditedVal);
-                    setIsTextEdited((prev) => !prev);
-                  }}
-                  className="w-8 ml-2 h-8"
-                />
-              </>
-            ) : (
-              <>
-                <h2 className="text-3xl truncate mt-2">{globalName}</h2>
-                <Pencil2Icon onClick={() => setIsTextEdited((prev) => !prev)} className="w-4 ml-2 h-4" />
-              </>
-            )}
+            <h2 className="text-3xl truncate mt-2">{globalName}</h2>
+            <Pencil2Icon
+              onClick={() =>
+                setText((prev) => ({
+                  ...prev,
+                  textEdited: !prev.textEdited,
+                }))
+              }
+              className="w-4 ml-2 h-4"
+            />
           </div>
         )}
       </section>
