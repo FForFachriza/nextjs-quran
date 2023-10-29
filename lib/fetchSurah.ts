@@ -28,3 +28,15 @@ export function useFetchSurah(): FetchSurah {
     isError: error,
   };
 }
+
+export function useFetchSurahById(id: number): FetchSurah {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const fetcher = (url: any) => fetch(url).then((r) => r.json());
+  const { data, error, isLoading } = useSWR(`https://open-api.my.id/api/quran/surah/${id}`, fetcher);
+
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
