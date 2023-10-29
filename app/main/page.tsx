@@ -6,7 +6,7 @@ export default function Main() {
   return (
     <>
       <NavbarComponent />
-      <main className="flex flex-col px-4">
+      <main className="flex flex-col px-4 container">
         <HeaderComponent />
         <ListSurahComponent />
       </main>

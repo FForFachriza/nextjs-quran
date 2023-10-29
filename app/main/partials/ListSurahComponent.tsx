@@ -58,13 +58,13 @@ export default function ListSurahComponent() {
               <section
                 onClick={() => redirectHandler(val.nama_latin, val.nomor)}
                 key={i}
-                className="flex flex-row mt-4 justify-between items-center hover:bg-slate-200 transition-colors duration-300 py-4 px-2 rounded-md"
+                className="flex flex-row mt-4 justify-between items-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-300 py-4 px-2 rounded-md"
               >
                 <div className="flex flex-row items-center">
                   <SVGComponent num={val.nomor} />
                   <div className="flex flex-col ml-3">
                     <h1 className="font-semibold">{val.nama_latin}</h1>
-                    <h2 className="uppercase text-black/60">
+                    <h2 className="uppercase text-black/60 dark:text-white/60">
                       {val.tempat_turun} - {val.jumlah_ayat} ayat
                     </h2>
                   </div>
@@ -92,7 +92,7 @@ function SVGComponent({ num }: { num: number }) {
           <rect width="36" height="36" fill="white" transform="translate(0.375)" />
         </clipPath>
       </defs>
-      <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="15" fill="black">
+      <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="15" className="fill-black dark:fill-white">
         {num}
       </text>
     </svg>

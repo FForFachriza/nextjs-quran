@@ -29,7 +29,7 @@ export default function HeaderComponent() {
   return (
     <section className="flex flex-col ">
       <section className="my-4 flex flex-col font-semibold">
-        <h1 className="text-black/40 text-xl">Assalamualaikum</h1>
+        <h1 className="text-black/60 dark:text-white/60 text-xl">Assalamualaikum</h1>
         {!isClient ? (
           <Skeleton className="h-8 w-[250px]" />
         ) : text.textEdited ? (

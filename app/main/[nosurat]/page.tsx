@@ -12,7 +12,7 @@ export default function SuratDetail({ params }: { params: { nosurat: number } })
   const { data, isError, isLoading } = useFetchSurahById(nosurat);
 
   return (
-    <main className="px-4 mb-36">
+    <main className="px-4 mb-36 container">
       {isLoading ? (
         <>
           <Skeleton className="h-[220px] my-8 rounded-lg" />
@@ -34,7 +34,7 @@ export default function SuratDetail({ params }: { params: { nosurat: number } })
 
           {data.ayat.map((val: any, i: number) => (
             <section key={i}>
-              <div className="flex flex-row bg-slate-200 rounded-lg p-2 my-4 w-full">
+              <div className="flex flex-row bg-slate-200 dark:bg-slate-700 rounded-lg p-2 my-4 w-full">
                 <div className="w-8 h-8 text-center bg-[#672cbc] rounded-full flex items-center justify-center text-white">
                   {val.nomor}
                 </div>
@@ -48,7 +48,7 @@ export default function SuratDetail({ params }: { params: { nosurat: number } })
           ))}
 
           <section className="fixed bottom-6 left-0 mx-4 shadow right-0">
-            <AudioPlayer autoPlay src={data.audio} onPlay={(e) => console.log("onPlay")} />
+            <AudioPlayer autoPlay src={data.audio} />
           </section>
         </>
       )}
