@@ -10,7 +10,7 @@ export default function NavbarComponent() {
 
   return (
     <>
-      <nav className="flex flex-row w-full justify-between py-2 px-4 items-center">
+      <nav className="flex flex-row w-full justify-between p-4 items-center">
         <Sheet>
           <SheetTrigger>
             <TextAlignLeftIcon className="h-6 w-6 text-[#672cbc]" />
