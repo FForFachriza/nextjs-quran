@@ -48,22 +48,3 @@ export default function NavbarComponent() {
     </nav>
   );
 }
-
-function AccordionComponent({ setTheme }) {
-  return (
-    <Accordion type="single" collapsible>
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Theme</AccordionTrigger>
-        <AccordionContent>
-          <section className="flex flex-col w-full items-start">
-            <Button className="flex w-full justify-start" onClick={() => setTheme("dark")}>
-              Dark Mode
-            </Button>
-            <Button onClick={() => setTheme("light")}>Light Mode</Button>
-            <Button onClick={() => setTheme("system")}>System Mode</Button>
-          </section>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-  );
-}
