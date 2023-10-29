@@ -14,7 +14,7 @@ export default function HeaderDetail({ nama_latin, jumlah_ayat, tempat_turun, ar
       <div className="flex flex-col items-center z-10">
         <p className="text-xl">{nama_latin}</p>
         <p className="text-sm">{arti}</p>
-        <Separator className="w-56 my-4" />
+        <Separator className="w-56 my-4 bg-white" />
         <p className="uppercase text-sm">
           {tempat_turun} - {jumlah_ayat} Ayat
         </p>

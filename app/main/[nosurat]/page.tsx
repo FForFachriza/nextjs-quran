@@ -47,7 +47,7 @@ export default function SuratDetail({ params }: { params: { nosurat: number } })
             </section>
           ))}
 
-          <section className="fixed bottom-6 left-0 mx-4 shadow right-0">
+          <section className="fixed bottom-6 left-0 shadow container right-0">
             <AudioPlayer autoPlay src={data.audio} />
           </section>
         </>

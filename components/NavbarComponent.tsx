@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function NavbarComponent() {
   const { setSearch } = useSearchStore.getState();
-  const { setTheme } = useTheme();
+  const { setTheme , theme} = useTheme();
 
   return (
     <nav className="flex flex-row justify-between container p-4 items-center">
@@ -35,6 +35,7 @@ export default function NavbarComponent() {
                       <Button className="flex w-full justify-start my-2" variant={"outline"} onClick={() => setTheme("system")}>
                         System Mode
                       </Button>
+                      <p className="text-center w-full my-2">Currently Active: {theme}</p>
                     </section>
                   </AccordionContent>
                 </AccordionItem>
