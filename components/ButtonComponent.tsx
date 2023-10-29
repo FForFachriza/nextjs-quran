@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +13,7 @@ export default function ButtonComponent() {
   const { toast } = useToast();
   const [name, setName] = useState<string>("");
   const router = useRouter();
-  const { setName: setGlobalName } = useNameStore.getState();
+  const { setName: setGlobalName, name: globalName } = useNameStore.getState();
 
   const setGlobalNameHandler = async () => {
     setGlobalName(name);
@@ -23,10 +23,14 @@ export default function ButtonComponent() {
       description: `Halo ${name} Selamat Datang Di Website Quran!`,
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     router.push("/main");
   };
+
+  useEffect(() => {
+    if (globalName) {
+      router.push("/main");
+    }
+  }, [globalName]);
 
   return (
     <Dialog>
